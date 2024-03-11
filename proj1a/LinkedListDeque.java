@@ -3,12 +3,12 @@
 public class LinkedListDeque <T>{
 
    class Node{
-        public T val;
-        public Node next;
-        public Node pre;
+        private T item;
+        private Node next;
+        private Node pre;
 
-        public Node(T val){
-            this.val = val;
+        public Node(T item){
+            this.item = item;
         }
     }
     private Node dummyHead;
@@ -27,6 +27,7 @@ public class LinkedListDeque <T>{
         if(size == 0){
             dummyHead.next = node;
             node.pre = dummyHead;
+            rear = node;
         }else {
             node.next = dummyHead.next;
             dummyHead.next.pre = node;
@@ -56,7 +57,7 @@ public class LinkedListDeque <T>{
     public void printDeque(){
         Node p = dummyHead.next;
         while (p != null){
-            System.out.print(p.val + " ");
+            System.out.print(p.item + " ");
             p = p.next;
         }
     }
@@ -66,7 +67,7 @@ public class LinkedListDeque <T>{
             Node node = dummyHead.next;
             dummyHead.next = dummyHead.next.next;
             size--;
-            return node.val;
+            return node.item;
         }else {
             return null;
         }
@@ -76,15 +77,16 @@ public class LinkedListDeque <T>{
         if(!isEmpty()){
             Node node = rear;
             rear = rear.pre;
+            rear.next = null;
             size--;
-            return (T) node.val;
+            return (T) node.item;
         }else {
             return null;
         }
     }
 
     public T get(int index){
-        if(index >= size()){
+        if(index >= size() || index < 0){
             return null;
         }else {
 
@@ -93,7 +95,7 @@ public class LinkedListDeque <T>{
                 p = p.next;
                 index--;
             }
-            return p.val;
+            return p.item;
         }
     }
 
@@ -106,7 +108,7 @@ public class LinkedListDeque <T>{
 
     private T getRecursiveHelp(Node start, int index) {
         if (index == 0) {
-            return start.val;
+            return start.item;
         } else {
             return getRecursiveHelp(start.next, index - 1);
         }
