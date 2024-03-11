@@ -1,109 +1,104 @@
 
 
-public class LinkedListDeque <T>{
+public class LinkedListDeque<T> {
 
-   class Node{
+    class Node {
         private T item;
         private Node next;
         private Node pre;
 
-        public Node(T item){
+        public Node(T item) {
             this.item = item;
         }
+        public Node(T item, Node pre, Node next){
+            this.item = item;
+            this.pre = pre;
+            this.next = next;
+        }
+        public Node(Node pre, Node next){
+            this.pre = pre;
+            this.next = next;
+        }
     }
-    private Node dummyHead;
-    private Node rear;
+
+    private Node sentinel;
     private int size;
 
-    public LinkedListDeque(){
-        dummyHead = new Node(null);
-        rear = dummyHead;
+    public LinkedListDeque() {
+        sentinel = new Node(null, null);
+        sentinel.pre = sentinel;
+        sentinel.next = sentinel;
         size = 0;
     }
 
-    public void addFirst(T item){
-        Node node = new Node(item);
-
-        if(size == 0){
-            dummyHead.next = node;
-            node.pre = dummyHead;
-            rear = node;
-        }else {
-            node.next = dummyHead.next;
-            dummyHead.next.pre = node;
-            node.pre = dummyHead;
-            dummyHead.next = node;
-        }
-
+    public void addFirst(T item) {
+        Node newList = new Node(item, sentinel.pre, sentinel);
+        sentinel.pre.next = newList;
+        sentinel.pre = newList;
         size++;
     }
 
-    public void addLast(T item){
-        Node node = new Node(item);
-        node.pre = rear;
-        rear.next = node;
-        rear = node;
+    public void addLast(T item) {
+        Node newList = new Node(item, sentinel.pre, sentinel);
+        sentinel.pre.next = newList;
+        sentinel.pre = newList;
         size++;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
-    public void printDeque(){
-        Node p = dummyHead.next;
-        while (p != null){
-            System.out.print(p.item + " ");
-            p = p.next;
+    public void printDeque() {
+        Node ptr = sentinel.next;
+        while (ptr != sentinel) {
+            System.out.print(ptr.item + " ");
+            ptr = ptr.next;
         }
     }
 
-    public T removeFirst(){
-        if(!isEmpty()){
-            Node node = dummyHead.next;
-            dummyHead.next = dummyHead.next.next;
-            size--;
-            return node.item;
-        }else {
+    public T removeFirst() {
+        if (size == 0) {
             return null;
         }
+        T ret = sentinel.next.item;
+        sentinel.next.next.pre = sentinel;
+        sentinel.next = sentinel.next.next;
+        size--;
+        return ret;
     }
 
-    public T removeLast(){
-        if(!isEmpty()){
-            Node node = rear;
-            rear = rear.pre;
-            rear.next = null;
-            size--;
-            return (T) node.item;
-        }else {
+    public T removeLast() {
+        if (size == 0) {
             return null;
         }
+        T ret = sentinel.pre.item;
+        sentinel.pre.pre.next = sentinel;
+        sentinel.pre = sentinel.pre.pre;
+        size--;
+        return ret;
     }
 
-    public T get(int index){
-        if(index >= size() || index < 0){
-            return null;
-        }else {
-
-            Node p = dummyHead;
-            while (index >= 0){
-                p = p.next;
-                index--;
-            }
-            return p.item;
-        }
-    }
-
-    public T getRecursive(int index){
+    public T get(int index) {
         if (index >= size) {
             return null;
         }
-        return getRecursiveHelp(dummyHead.next, index);
+        Node ptr = sentinel;
+        for (int i = 0; i <= index; i++) {
+            ptr = ptr.next;
+        }
+        return ptr.item;
+    }
+
+    public T getRecursive(int index) {
+        if (index >= size) {
+            return null;
+        }
+        return getRecursiveHelp(sentinel.next, index);
     }
 
     private T getRecursiveHelp(Node start, int index) {
