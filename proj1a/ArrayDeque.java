@@ -19,7 +19,7 @@ public class ArrayDeque<T> {
 
     public void addFirst(T item) {
         if(front == froSen){
-            bordenArr();;
+            bordenArr();
         }
         arr[front] = item;
         front++;
@@ -35,9 +35,7 @@ public class ArrayDeque<T> {
         changeArr();
     }
     private void changeArr(){
-        for (int i = 0; i < front; i++) {
-            newArr[i] = arr[i];
-        }
+        if (front >= 0) System.arraycopy(arr, 0, newArr, 0, front);
         int index = newArr.length - 1;
         for (int i = arr.length - 1; i > last; i--) {
             newArr[index] = arr[i];
