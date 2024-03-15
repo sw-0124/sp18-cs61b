@@ -1,4 +1,5 @@
 package synthesizer;
+import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -9,7 +10,11 @@ import static org.junit.Assert.*;
 public class TestArrayRingBuffer {
     @Test
     public void someTest() {
-        //ArrayRingBuffer arb = new ArrayRingBuffer(10);
+        ArrayRingBuffer arb = new ArrayRingBuffer(10);
+        //Assert.assertEquals(1, arb.dequeue());
+        arb.enqueue(1);
+        Assert.assertEquals(1, arb.dequeue());
+
     }
 
     /** Calls tests for ArrayRingBuffer. */
