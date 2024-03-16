@@ -1,5 +1,6 @@
 package synthesizer;// TODO: Make sure to make this class a part of the synthesizer package
 // package <package name>;
+
 import synthesizer.AbstractBoundedQueue;
 
 import java.util.Arrays;
@@ -39,7 +40,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      */
     public void enqueue(T x) {
         // TODO: Enqueue the item. Don't forget to increase fillCount and update last.
-        if(isFull()){
+        if (isFull()) {
             throw new RuntimeException("Ring Buffer Overflow");
         }
 
@@ -55,7 +56,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      */
     public T dequeue() {
         // TODO: Dequeue the first item. Don't forget to decrease fillCount and update
-        if(isEmpty()){
+        if (isEmpty()) {
             throw new RuntimeException("Ring Buffer Underflow");
         }
         T ans = rb[first];
@@ -70,7 +71,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      */
     public T peek() {
         // TODO: Return the first item. None of your instance variables should change.
-        if(isEmpty()){
+        if (isEmpty()) {
             throw new RuntimeException("Ring Buffer is empty");
         }
         return rb[first];
@@ -82,11 +83,13 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     }
 
     // TODO: When you get to part 5, implement the needed code to support iteration.
-    private class MyIterator implements Iterator<T>{
+    private class MyIterator implements Iterator<T> {
         private int wizPos;
-        public MyIterator(){
+
+        public MyIterator() {
             wizPos = 0;
         }
+
         @Override
         public boolean hasNext() {
             return wizPos < fillCount();

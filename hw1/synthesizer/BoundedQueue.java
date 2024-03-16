@@ -1,7 +1,7 @@
 package synthesizer;
 
 
-public interface BoundedQueue <T> extends Iterable<T> {
+public interface BoundedQueue<T> extends Iterable<T> {
     int capacity();
 
     int fillCount();
@@ -12,11 +12,11 @@ public interface BoundedQueue <T> extends Iterable<T> {
 
     T peek();
 
-    default boolean isEmpty(){
+    default boolean isEmpty() {
         return fillCount() == 0;
     }
 
-    default boolean isFull(){
+    default boolean isFull() {
         return fillCount() == capacity();
     }
 }
